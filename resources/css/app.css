@@ -1,0 +1,279 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views';
+
+/* GIS design tokens — mirrors DESIGN.md. Tailwind v4 generates utilities from these. */
+@theme {
+    --font-sans: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* Brand & ink */
+    --color-primary: #17211c;
+    --color-primary-active: #0e1612;
+    --color-ink: #17211c;
+    --color-body: #353b36;
+    --color-muted: #5a6159;
+    --color-hairline: #e2e5e1;
+    --color-border-strong: #9aa39a;
+
+    /* Surfaces */
+    --color-canvas: #ffffff;
+    --color-surface-soft: #f6f9f4;
+    --color-surface-strong: #e4eae0;
+    --color-surface-dark: #0e3a17;
+    --color-surface-dark-elevated: #10421b;
+
+    /* Signature surfaces (the voltage) */
+    --color-forest: #117613;
+    --color-ocean: #0b6e96;
+    --color-mint: #dafae6;
+    --color-cream: #f3f0e4;
+    --color-lime-tint: #eef7d6;
+
+    /* Accents (icons/dividers only — never large bg with white text) */
+    --color-accent-lime: #b6e227;
+    --color-accent-sky: #02a1e5;
+
+    /* Functional */
+    --color-link: #0e6fa8;
+    --color-link-active: #0a4e76;
+    --color-info: #0b6e96;
+    --color-success: #117613;
+
+    /* Radius scale (largest is lg=12px; no pill) */
+    --radius-xs: 2px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+
+    /* Type scale — name => size/line-height/tracking/weight */
+    --text-display-xl: 48px;
+    --text-display-xl--line-height: 1.1;
+    --text-display-xl--letter-spacing: -0.5px;
+    --text-display-xl--font-weight: 600;
+    --text-display-lg: 40px;
+    --text-display-lg--line-height: 1.15;
+    --text-display-lg--letter-spacing: -0.4px;
+    --text-display-lg--font-weight: 600;
+    --text-display-md: 32px;
+    --text-display-md--line-height: 1.2;
+    --text-display-md--letter-spacing: -0.2px;
+    --text-display-md--font-weight: 600;
+    --text-title-lg: 24px;
+    --text-title-lg--line-height: 1.3;
+    --text-title-lg--font-weight: 600;
+    --text-title-md: 20px;
+    --text-title-md--line-height: 1.4;
+    --text-title-md--font-weight: 500;
+    --text-title-sm: 18px;
+    --text-title-sm--line-height: 1.4;
+    --text-title-sm--font-weight: 600;
+    --text-body-lg: 18px;
+    --text-body-lg--line-height: 1.6;
+    --text-body-md: 16px;
+    --text-body-md--line-height: 1.6;
+    --text-caption: 14px;
+    --text-caption--line-height: 1.4;
+    --text-caption--letter-spacing: 0.1px;
+    --text-caption--font-weight: 500;
+    --text-overline: 13px;
+    --text-overline--line-height: 1.2;
+    --text-overline--letter-spacing: 1px;
+    --text-overline--font-weight: 600;
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+    body {
+        @apply bg-canvas text-body antialiased;
+        font-size: 16px;
+        font-feature-settings: 'ss01', 'cv01';
+        text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3, h4 {
+        @apply text-ink;
+        text-wrap: balance;
+    }
+    p {
+        text-wrap: pretty;
+    }
+    ::selection {
+        background-color: color-mix(in srgb, var(--color-accent-lime) 55%, transparent);
+        color: var(--color-ink);
+    }
+    :focus-visible {
+        outline: 2px solid var(--color-accent-sky);
+        outline-offset: 2px;
+    }
+}
+
+@layer components {
+    /* Buttons — primary is near-black ink, one per viewport (DESIGN). */
+    .btn-primary,
+    .btn-secondary,
+    .btn-on-dark {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-body-md font-semibold transition-all duration-200;
+        padding: 14px 26px;
+        min-height: 48px;
+    }
+    .btn-primary {
+        @apply bg-primary text-white hover:bg-primary-active;
+        box-shadow: 0 1px 2px rgba(23, 33, 28, 0.18), 0 8px 24px -12px rgba(23, 33, 28, 0.5);
+    }
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(23, 33, 28, 0.2), 0 14px 30px -12px rgba(23, 33, 28, 0.55);
+    }
+    .btn-secondary {
+        @apply border border-border-strong bg-canvas text-ink hover:border-ink hover:bg-surface-soft;
+    }
+    .btn-on-dark {
+        @apply bg-canvas text-ink hover:-translate-y-px;
+    }
+    /* Hero (dark) buttons */
+    .btn-lime,
+    .btn-ghost-light {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-body-md font-semibold transition-all duration-200;
+        padding: 14px 26px;
+        min-height: 48px;
+    }
+    .btn-lime {
+        @apply bg-accent-lime text-ink;
+    }
+    .btn-lime:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.04);
+        box-shadow: 0 12px 30px -12px rgba(182, 226, 39, 0.65);
+    }
+    .btn-ghost-light {
+        @apply border border-white/40 text-white hover:border-white/80 hover:bg-white/10;
+    }
+
+    /* Section eyebrow — small lime dash + uppercase label */
+    .overline {
+        @apply inline-flex items-center gap-2.5 text-overline uppercase text-muted;
+    }
+    .overline::before {
+        content: '';
+        @apply h-px w-7 bg-accent-lime;
+    }
+    .overline.no-dash::before {
+        content: none;
+    }
+
+    /* Category / status badges */
+    .badge-category {
+        @apply inline-block rounded-sm bg-lime-tint px-2.5 py-1 text-overline uppercase text-forest;
+    }
+    .badge-realized {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-forest px-3 py-1 text-caption text-white;
+    }
+    .badge-planned {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-dashed border-border-strong bg-canvas px-3 py-1 text-caption text-muted;
+    }
+
+    /* Content card with hover lift */
+    .card {
+        @apply rounded-lg border border-hairline bg-canvas transition-all duration-200;
+    }
+    .card-hover:hover {
+        @apply border-border-strong;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px -16px rgba(23, 33, 28, 0.28);
+    }
+
+    /* Rich-text body (program/activity/page) */
+    .prose-gis :is(h2, h3) {
+        @apply mt-8 mb-3 text-ink text-title-lg;
+    }
+    .prose-gis p {
+        @apply mb-4 text-body text-body-md;
+    }
+    .prose-gis ul {
+        @apply mb-4 list-disc space-y-1 pl-6 text-body;
+    }
+    .prose-gis a {
+        @apply text-link underline;
+    }
+
+    /* --- Navbar (solid default) --- */
+    .nav-link {
+        color: var(--color-body);
+        transition: color 0.15s ease;
+    }
+    .nav-link:hover,
+    .nav-link.is-active {
+        color: var(--color-ink);
+    }
+    .nav-underline {
+        background-color: var(--color-forest);
+    }
+    .nav-burger {
+        color: var(--color-ink);
+    }
+    .nav-logo {
+        transition: filter 0.3s ease;
+    }
+
+    /* --- Navbar transparent over dark hero (top state) --- */
+    #site-header[data-transparent='true']:not(.is-solid) .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-link:hover,
+    #site-header[data-transparent='true']:not(.is-solid) .nav-link.is-active {
+        color: #ffffff !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-underline {
+        background-color: var(--color-accent-lime) !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-burger {
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.4) !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-logo {
+        filter: none !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-cta {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
+        box-shadow: none !important;
+    }
+    #site-header[data-transparent='true']:not(.is-solid) .nav-cta:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* --- Navbar solidified after scroll --- */
+    #site-header[data-transparent='true'].is-solid {
+        background: color-mix(in srgb, #ffffff 95%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--color-hairline);
+    }
+    #site-header[data-transparent='true'].is-solid .nav-link {
+        color: var(--color-body) !important;
+    }
+    #site-header[data-transparent='true'].is-solid .nav-link:hover,
+    #site-header[data-transparent='true'].is-solid .nav-link.is-active {
+        color: var(--color-ink) !important;
+    }
+    #site-header[data-transparent='true'].is-solid .nav-underline {
+        background-color: var(--color-forest) !important;
+    }
+    #site-header[data-transparent='true'].is-solid .nav-burger {
+        color: var(--color-ink) !important;
+        border-color: var(--color-hairline) !important;
+    }
+    #site-header[data-transparent='true'].is-solid .nav-logo {
+        filter: none !important;
+    }
+    #site-header[data-transparent='true'].is-solid .nav-cta {
+        background: var(--color-primary) !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+}
