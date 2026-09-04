@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
 Route::get('/struktur', [PageController::class, 'struktur'])->name('struktur');
 Route::get('/aksi', [PageController::class, 'aksi'])->name('aksi');
+Route::get('/aksi/{slug}', [PageController::class, 'aksiDetail'])->name('aksi.detail');
 Route::get('/terkini', [PageController::class, 'terkini'])->name('terkini');
 Route::get('/even', [PageController::class, 'even'])->name('even');
 

@@ -25,15 +25,15 @@
             'hasDropdown' => true,
             'headerTitle' => 'KONSERVASI',
             'subLinks' => [
-                ['label' => 'Kehutanan', 'url' => route('aksi').'#kehutanan'],
-                ['label' => 'Pertanian', 'url' => route('aksi').'#pertanian'],
-                ['label' => 'Perkebunan', 'url' => route('aksi').'#perkebunan'],
-                ['label' => 'Perubahan Iklim', 'url' => route('aksi').'#perubahan-iklim'],
-                ['label' => 'Advokasi Kebijakan', 'url' => route('aksi').'#advokasi-kebijakan'],
-                ['label' => 'Biodiversity Warriors', 'url' => route('aksi').'#biodiversity-warriors'],
-                ['label' => 'Investasi Hijau', 'url' => route('aksi').'#investasi-hijau'],
-                ['label' => 'ESI', 'url' => route('aksi').'#esi'],
-                ['label' => 'Karbon Trading', 'url' => route('aksi').'#karbon-trading'],
+                ['label' => 'Kehutanan', 'url' => route('aksi.detail', ['slug' => 'kehutanan'])],
+                ['label' => 'Pertanian', 'url' => route('aksi.detail', ['slug' => 'pertanian'])],
+                ['label' => 'Perkebunan', 'url' => route('aksi.detail', ['slug' => 'perkebunan'])],
+                ['label' => 'Perubahan Iklim', 'url' => route('aksi.detail', ['slug' => 'perubahan-iklim'])],
+                ['label' => 'Advokasi Kebijakan', 'url' => route('aksi.detail', ['slug' => 'advokasi-kebijakan'])],
+                ['label' => 'Biodiversity Warriors', 'url' => route('aksi.detail', ['slug' => 'biodiversity-warriors'])],
+                ['label' => 'Investasi Hijau', 'url' => route('aksi.detail', ['slug' => 'investasi-hijau'])],
+                ['label' => 'ESI', 'url' => route('aksi.detail', ['slug' => 'esi'])],
+                ['label' => 'Karbon Trading', 'url' => route('aksi.detail', ['slug' => 'karbon-trading'])],
             ]
         ],
         [
@@ -42,8 +42,8 @@
             'hasDropdown' => true,
             'headerTitle' => 'PUBLIKASI',
             'subLinks' => [
-                ['label' => 'Artikel & Opini', 'url' => route('berita.index')],
-                ['label' => 'Siaran Pers', 'url' => route('terkini').'#siaran-pers'],
+                ['label' => 'Artikel & Opini', 'url' => route('berita.index', ['type' => 'artikel'])],
+                ['label' => 'Siaran Pers', 'url' => route('berita.index', ['type' => 'berita'])],
                 ['label' => 'Pusat Informasi', 'url' => route('publikasi.index')],
                 ['label' => 'Galeri', 'url' => route('aksi').'#galeri'],
             ]

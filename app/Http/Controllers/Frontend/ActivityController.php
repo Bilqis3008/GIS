@@ -10,10 +10,16 @@ use Illuminate\Contracts\View\View;
 
 class ActivityController extends Controller
 {
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
+        $query = Activity::published()->with('media');
+
+        if ($request->has('type')) {
+            $query->where('type', $request->query('type'));
+        }
+
         return view('frontend.pages.berita-index', [
-            'activities' => Activity::published()->with('media')->paginate(9),
+            'activities' => $query->paginate(9)->withQueryString(),
         ]);
     }
 
