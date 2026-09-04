@@ -33,44 +33,68 @@ class ActivityResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('title')
-                ->label('Judul')
-                ->required()
-                ->maxLength(255)
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug((string) $state)) : null),
-            Forms\Components\TextInput::make('slug')
-                ->required()
-                ->maxLength(255)
-                ->unique(ignoreRecord: true),
-            Forms\Components\Select::make('type')
-                ->label('Tipe')
-                ->options(ActivityType::options())
-                ->required()
-                ->default('berita'),
-            Forms\Components\Textarea::make('excerpt')
-                ->label('Ringkasan')
-                ->rows(2),
-            Forms\Components\RichEditor::make('body')
-                ->label('Isi')
-                ->columnSpanFull(),
-            SpatieMediaLibraryFileUpload::make('cover')
-                ->collection('cover')
-                ->image()
-                ->imageEditor()
-                ->label('Gambar Sampul'),
-            SpatieMediaLibraryFileUpload::make('gallery')
-                ->collection('gallery')
-                ->image()
-                ->multiple()
-                ->reorderable()
-                ->label('Galeri Dokumentasi'),
-            Forms\Components\DateTimePicker::make('published_at')
-                ->label('Tanggal Publikasi')
-                ->default(now()),
-            Forms\Components\Toggle::make('is_published')
-                ->label('Dipublikasikan')
-                ->default(true),
+            Forms\Components\Section::make('Informasi Berita')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('title')
+                        ->label('Judul Berita / Artikel')
+                        ->required()
+                        ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug((string) $state)) : null)
+                        ->columnSpanFull(),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255)
+                        ->unique(ignoreRecord: true),
+                    Forms\Components\Select::make('type')
+                        ->label('Tipe Content')
+                        ->options(ActivityType::options())
+                        ->required()
+                        ->default('berita'),
+                    Forms\Components\TextInput::make('author')
+                        ->label('Penulis / Narasumber')
+                        ->placeholder('Contoh: Dr. Ir. H. Ahmad Rizal / Tim Advokasi GIS')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('source_name')
+                        ->label('Nama Sumber / Publisher')
+                        ->placeholder('Contoh: Dinas LHK Sumsel / Mongabay / Antara')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('source_url')
+                        ->label('Link Sumber Asli (URL)')
+                        ->placeholder('https://...')
+                        ->url()
+                        ->maxLength(500)
+                        ->columnSpanFull(),
+                    Forms\Components\DateTimePicker::make('published_at')
+                        ->label('Tanggal Publikasi')
+                        ->default(now()),
+                    Forms\Components\Toggle::make('is_published')
+                        ->label('Dipublikasikan')
+                        ->default(true),
+                ]),
+
+            Forms\Components\Section::make('Konten & Media')
+                ->schema([
+                    Forms\Components\Textarea::make('excerpt')
+                        ->label('Ringkasan / Excerpt')
+                        ->rows(2)
+                        ->columnSpanFull(),
+                    Forms\Components\RichEditor::make('body')
+                        ->label('Isi Lengkap')
+                        ->columnSpanFull(),
+                    SpatieMediaLibraryFileUpload::make('cover')
+                        ->collection('cover')
+                        ->image()
+                        ->imageEditor()
+                        ->label('Gambar Sampul Utama'),
+                    SpatieMediaLibraryFileUpload::make('gallery')
+                        ->collection('gallery')
+                        ->image()
+                        ->multiple()
+                        ->reorderable()
+                        ->label('Galeri Dokumentasi (Opsional)'),
+                ]),
         ]);
     }
 

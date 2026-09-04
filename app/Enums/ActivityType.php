@@ -8,6 +8,7 @@ enum ActivityType: string
 {
     case Berita = 'berita';
     case Artikel = 'artikel';
+    case Opini = 'opini';
     case Kegiatan = 'kegiatan';
 
     public function label(): string
@@ -15,6 +16,7 @@ enum ActivityType: string
         return match ($this) {
             self::Berita => 'Berita',
             self::Artikel => 'Artikel',
+            self::Opini => 'Opini',
             self::Kegiatan => 'Kegiatan',
         };
     }

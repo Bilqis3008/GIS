@@ -1,9 +1,9 @@
-<x-layout title="{{ $program['title'] }} - Yayasan GIS" description="{{ $program['desc'] }}">
+<x-layout title="{{ $program->title }} - Yayasan GIS" description="{{ $program->body }}">
 
     {{-- Hero Section --}}
     <section class="relative min-h-[85vh] flex items-center bg-zinc-900 border-b border-white/10">
         <!-- Background Image -->
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] hover:scale-105 ease-out" style="background-image: url('{{ $program['image'] }}');"></div>
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] hover:scale-105 ease-out" style="background-image: url('{{ $program->getFirstMediaUrl('cover') ?: $program->icon }}');"></div>
         
         <!-- Gradient overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 to-black/40"></div>
@@ -14,17 +14,17 @@
                 <!-- Badge -->
                 <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-emerald-600/20 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6 border border-emerald-500/20 backdrop-blur-md">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    {{ $program['sub'] }}
+                    {{ $program->summary }}
                 </span>
 
                 <!-- Title -->
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-8 leading-tight tracking-tight">
-                    {{ $program['title'] }}
+                    {{ $program->title }}
                 </h1>
                 
                 <!-- Description -->
                 <p class="text-lg md:text-xl text-zinc-300 leading-relaxed font-light max-w-2xl">
-                    {{ $program['desc'] }}
+                    {{ strip_tags($program->body) }}
                 </p>
 
                 <!-- Action Button -->
@@ -35,7 +35,7 @@
                     </a>
                     
                     <a href="{{ route('aksi') }}" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-3.5 rounded-full font-medium transition-all backdrop-blur-sm">
-                        Kembali ke Program
+                        Kembali ke Aksi
                     </a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                                 </div>
                                 <div>
                                     <span class="block text-sm font-semibold tracking-wider text-zinc-500 uppercase mb-1">Pilar Tujuan</span>
-                                    <span class="block text-zinc-700 dark:text-zinc-300 font-medium">{{ $program['sub'] }}</span>
+                                    <span class="block text-zinc-700 dark:text-zinc-300 font-medium">{{ $program->summary }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -84,10 +84,10 @@
 
                 <!-- Right Detailed Content -->
                 <div class="lg:col-span-8 prose prose-lg prose-zinc dark:prose-invert max-w-none">
-                    <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6">Pentingnya {{ $program['sub'] }} untuk Masa Depan</h2>
+                    <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6">Pentingnya {{ $program->summary }} untuk Masa Depan</h2>
                     
                     <p class="text-zinc-600 dark:text-zinc-300 leading-loose mb-8">
-                        Melalui inisiatif <strong>{{ $program['title'] }}</strong>, Yayasan Green Invite Sembilan (GIS) hadir menjembatani solusi keberlanjutan yang berakar dari masyarakat. Kami meyakini bahwa menjaga alam bukan sekadar tugas moral, melainkan investasi peradaban jangka panjang, tak terkecuali di wilayah kaya potensi seperti Muara Enim, Sumatera Selatan.
+                        Melalui inisiatif <strong>{{ $program->title }}</strong>, Yayasan Green Invite Sembilan (GIS) hadir menjembatani solusi keberlanjutan yang berakar dari masyarakat. Kami meyakini bahwa menjaga alam bukan sekadar tugas moral, melainkan investasi peradaban jangka panjang, tak terkecuali di wilayah kaya potensi seperti Muara Enim, Sumatera Selatan.
                     </p>
 
                     <div class="my-12 p-8 bg-emerald-50 dark:bg-emerald-950/20 rounded-3xl border-l-4 border-emerald-500 shadow-sm relative overflow-hidden">
@@ -95,7 +95,7 @@
                             <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.714-3.663-9.609-10.017-9.609h-4v4h3.693c3.155 0 4.706 1.868 4.706 5.253v3.747h5.618zm10 0v-7.391c0-5.714-3.663-9.609-10.017-9.609h-4v4h3.693c3.155 0 4.706 1.868 4.706 5.253v3.747h5.618z"></path></svg>
                         </div>
                         <p class="relative z-10 text-xl font-medium text-emerald-900 dark:text-emerald-100 italic leading-relaxed">
-                            "{{ $program['desc'] }}"
+                            "{!! $program->body !!}"
                         </p>
                     </div>
 

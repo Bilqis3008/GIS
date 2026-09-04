@@ -16,7 +16,7 @@ class Activity extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
-    protected $fillable = ['title', 'slug', 'type', 'excerpt', 'body', 'published_at', 'is_published'];
+    protected $fillable = ['title', 'slug', 'type', 'author', 'source_name', 'source_url', 'excerpt', 'body', 'published_at', 'is_published'];
 
     protected $casts = [
         'type' => ActivityType::class,

@@ -45,7 +45,7 @@
                 ['label' => 'Artikel & Opini', 'url' => route('berita.index', ['type' => 'artikel'])],
                 ['label' => 'Siaran Pers', 'url' => route('berita.index', ['type' => 'berita'])],
                 ['label' => 'Pusat Informasi', 'url' => route('publikasi.index')],
-                ['label' => 'Galeri', 'url' => route('aksi').'#galeri'],
+                ['label' => 'Galeri', 'url' => route('galeri')],
             ]
         ],
         [
